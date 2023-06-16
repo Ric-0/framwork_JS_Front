@@ -7,16 +7,12 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
 
   const login = (userData) => {
-    // Effectuez ici votre logique de connexion et vérification des identifiants
-
     // Si la connexion réussit
     setLoggedIn(true);
     setUserData(userData);
   };
 
   const logout = () => {
-    // Effectuez ici votre logique de déconnexion
-
     setLoggedIn(false);
     setUserData(null);
   };

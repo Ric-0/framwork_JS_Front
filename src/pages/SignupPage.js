@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 
 const SignupPage = () => {
-  const [pseudo, setPseudo] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [pseudo, setPseudo] = useState(''); // État du champ de saisie du pseudo
+  const [password, setPassword] = useState(''); // État du champ de saisie du mot de passe
+  const [confirmPassword, setConfirmPassword] = useState(''); // État du champ de saisie de confirmation du mot de passe
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-      let body = { pseudo: pseudo, password: password }
+      let body = { pseudo: pseudo, password: password };
+      // Requête HTTP POST vers l'API pour créer un utilisateur
       fetch('http://127.0.0.1:3000/user/create', {
         headers: {
           'Accept': 'application/json',
@@ -26,7 +27,6 @@ const SignupPage = () => {
     } else {
       alert('Les mots de passe ne correspondent pas')
     }
-    // Effectuez ici la logique de création de compte, par exemple en envoyant les données au serveur
   };
 
   return (
@@ -45,7 +45,7 @@ const SignupPage = () => {
           <label>Confirmer le mot de passe :</label>
           <input className="form-control" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
         </div>
-        <button className="btn btn-primary" type="submit">Créer le compte</button>
+        <button className="btn btn-primary" type="submit">Créer le compte</button> {/* Bouton pour soumettre le formulaire de création de compte */}
       </form>
     </div>
   );

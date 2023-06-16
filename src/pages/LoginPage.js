@@ -5,14 +5,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const LoginPage = () => {
   const { login } = useContext(AuthContext);
-  const [pseudo, setPseudo] = useState('');
-  const [password, setPassword] = useState('');
+  const [pseudo, setPseudo] = useState(''); // État du champ de saisie du pseudo
+  const [password, setPassword] = useState(''); // État du champ de saisie du mot de passe
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Effectuez ici votre appel à l'API de connexion
+    // Requête HTTP GET vers l'API pour obtenir la validation de connexion
     fetch('http://127.0.0.1:3000/user/connect?pseudo=' + pseudo + '&password=' + password, {
       headers: {
         'Accept': 'application/json',
@@ -28,7 +28,7 @@ const LoginPage = () => {
         const userData = { pseudo, id: data };
         login(userData);
 
-        // Effectuez la redirection vers la page HomePage
+        // Redirection vers la page HomePage
         navigate('/');
       }
     })
@@ -50,9 +50,9 @@ const LoginPage = () => {
           <input className="form-control" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
         <p>
-          Vous n'avez pas de compte ? <Link to="/create-account">Créer un compte</Link>
+          Vous n'avez pas de compte ? <Link to="/create-account">Créer un compte</Link> {/* Lien vers la page de création de compte */}
         </p>
-        <button className="btn btn-primary" type="submit">Se connecter</button>
+        <button className="btn btn-primary" type="submit">Se connecter</button> {/* Bouton de connexion */}
       </form>
     </div>
   );

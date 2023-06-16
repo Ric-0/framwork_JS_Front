@@ -7,20 +7,20 @@ import ExpenseTab from '../components/ExpenseTab';
 import Distribution from '../components/Distribution';
 
 const HomePage = () => {
-  const { userData } = useContext(AuthContext);
-  const [isModalCatOpen, setModalCatOpen] = useState(false);
-  const [isModalExpOpen, setModalExpOpen] = useState(false);
+  const { userData } = useContext(AuthContext); // Récupération des données utilisateur à partir du contexte d'authentification
+  const [isModalCatOpen, setModalCatOpen] = useState(false); // État pour la modale d'ajout de catégorie
+  const [isModalExpOpen, setModalExpOpen] = useState(false); // État pour la modale d'ajout de dépense
 
-  const openModalCat = () => {
+  const openModalCat = () => { // Fonction pour ouvrir la modale d'ajout de catégorie
     setModalCatOpen(true);
   };
 
-  const closeModalCat = () => {
+  const closeModalCat = () => { // Fonction pour fermer la modale d'ajout de catégorie
     setModalCatOpen(false);
   };
 
-  const handleSubmitCat = (value) => {
-    fetch('http://127.0.0.1:3000/category/create', {
+  const handleSubmitCat = (value) => { // Fonction pour soumettre le formulaire d'ajout de catégorie
+    fetch('http://127.0.0.1:3000/category/create', { // Requête HTTP POST vers l'API pour enregistrer la nouvelle catégorie
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -36,22 +36,22 @@ const HomePage = () => {
     });
   };
 
-  const openModalExp = () => {
+  const openModalExp = () => { // Fonction pour ouvrir la modale d'ajout de dépense
     setModalExpOpen(true);
   };
 
-  const closeModalExp = () => {
+  const closeModalExp = () => { // Fonction pour fermer la modale d'ajout de dépense
     setModalExpOpen(false);
   };
 
-  const handleSubmitExp = (value) => {
+  const handleSubmitExp = (value) => { // Fonction pour soumettre le formulaire d'ajout de dépense
     let body = {
       libelle: value.libelle,
       montant: value.montant,
       id_categorie: value.categorie.id,
       id_payeur: userData.id
     }
-    fetch('http://127.0.0.1:3000/expense/create', {
+    fetch('http://127.0.0.1:3000/expense/create', { // Requête HTTP POST vers l'API pour enregistrer la nouvelle dépense
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ const HomePage = () => {
     .then(data => {
       for (let i = 0; i < value.idParticipants.length; i++) {
         const idParticipant = value.idParticipants[i];
-        fetch('http://127.0.0.1:3000/expense/participation', {
+        fetch('http://127.0.0.1:3000/expense/participation', { // Requête HTTP POST vers l'API pour enregistrer la participation à la dépense
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -88,24 +88,28 @@ const HomePage = () => {
   return (
     <div className="container">
       <h1>Accueil</h1>
-      {userData && (
+      {userData ? (
         <div>
           <div>
-            <button className="btn btn-primary" onClick={openModalCat}>Ajouter une catégorie</button>
+            <button className="btn btn-primary" onClick={openModalCat}>Ajouter une catégorie</button> {/* Bouton pour ouvrir la modale d'ajout de catégorie */}
             <ModalAddCategory
               isOpen={isModalCatOpen}
               onClose={closeModalCat}
               onSubmit={handleSubmitCat}
             />
-            <button className="btn btn-primary" onClick={openModalExp}>Ajouter une dépense</button>
+            <button className="btn btn-primary" onClick={openModalExp}>Ajouter une dépense</button> {/* Bouton pour ouvrir la modale d'ajout de dépense */}
             <ModalAddExpense
               isOpen={isModalExpOpen}
               onClose={closeModalExp}
               onSubmit={handleSubmitExp}
             />
           </div>
-          <ExpenseTab />
-          <Distribution />
+          <ExpenseTab /> {/* Composant du tableau des dépenses */}
+          <Distribution /> {/* Composant de la répartition */}
+        </div>
+      ) : (
+        <div>
+          <p>Veuillez vous connecter pour accéder à plus d'informations.</p>
         </div>
       )}
     </div>

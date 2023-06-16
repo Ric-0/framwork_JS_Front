@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ModalAddCategory = ({ isOpen, onClose, onSubmit }) => {
-  const [textValue, setTextValue] = useState('');
+  const [textValue, setTextValue] = useState(''); // État pour stocker la valeur du champ de texte
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(textValue);
-    setTextValue('');
-    onClose();
+    onSubmit(textValue); // Appeler la fonction de soumission avec la valeur du champ de texte
+    setTextValue(''); // Réinitialiser la valeur du champ de texte à une chaîne vide
+    onClose(); // Appeler la fonction de fermeture du modal
   };
 
   return (
@@ -30,7 +30,7 @@ const ModalAddCategory = ({ isOpen, onClose, onSubmit }) => {
                   className="form-control"
                   type="text"
                   value={textValue}
-                  onChange={(e) => setTextValue(e.target.value)}
+                  onChange={(e) => setTextValue(e.target.value)} // Mettre à jour la valeur du champ de texte lorsqu'il y a un changement
                 />
               </div>
               <button type="submit" className="btn btn-primary">Envoyer</button>
